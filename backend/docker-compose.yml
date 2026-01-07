@@ -1,0 +1,43 @@
+services:
+  app:
+    container_name: todo-app
+    image: node:22
+    build: .
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: ["sh", "-c", "npm install && npx prisma generate && npm run dev"]
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/mydatabase
+    depends_on:
+      - db
+    networks:
+      - backend
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+  db_admin:
+    image: adminer
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/mydatabase
+    depends_on:
+      - db
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge

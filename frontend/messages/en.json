@@ -1,0 +1,180 @@
+{
+  "Todos": {
+    "generic": {
+      "empty": "No todos found."
+    },
+    "navbar": {
+      "home": "Home",
+      "userProfile": "User",
+      "todo": "Todo"
+    },
+    "columns": {
+      "id": "ID",
+      "title": "Create a new Task",
+      "name": "Name",
+      "description": "Description",
+      "completed": "Completed",
+      "tags": "Tags",
+      "category": "Category",
+      "assignedTo": "Assigned To",
+      "dueDate": "Due Date",
+      "reminder": "Reminder",
+      "createdAt": "Created At",
+      "priority": "Priority",
+      "detail": "Details",
+      "delete": "Delete",
+      "status": "Status",
+      "filterByStatus": "Status"
+    },
+    "actions": {
+      "add": "Add Todo",
+      "edit": "Edit Todo",
+      "delete": "Delete Todo",
+      "view": "View Todo",
+      "markComplete": "Mark as Complete",
+      "markIncomplete": "Mark as Incomplete"
+    },
+    "create": {
+      "title": "Create Todo",
+      "name": "Write a task Name",
+      "assignee": "Assignee",
+      "dueDate": "Due Date",
+      "description": "Description",
+      "tags": "Tags (comma separated)",
+      "category": "Category",
+      "assignedTo": "Assigned To",
+      "reminder": "Reminder",
+      "priority": "Priority",
+      "submit": "Create Todo",
+      "priorityOptions": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      },
+      "reminderDate": "Reminder Date",
+      "status": "Status",
+      "statusOptions": {
+        "pending": "Pending",
+        "completed": "Completed",
+        "inProgress": "In Progress"
+      }
+    },
+    "edit": {
+      "title": "Edit Todo",
+      "name": "Todo Name",
+      "description": "Description",
+      "tags": "Tags (comma separated)",
+      "category": "Category",
+      "assignedTo": "Assigned To",
+      "dueDate": "Due Date",
+      "reminder": "Reminder",
+      "priority": "Priority",
+      "submit": "Update Todo",
+      "priorityOptions": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      },
+      "reminderDate": "Reminder Date",
+      "status": "Status",
+      "statusOptions": {
+        "pending": "Pending",
+        "completed": "Completed",
+        "inProgress": "In Progress"
+      }
+    },
+    "details": {
+      "title": "Todo Details",
+      "name": "Todo Name",
+      "description": "Description",
+      "tags": "Tags",
+      "category": "Category",
+      "assignedTo": "Assigned To",
+      "dueDate": "Due Date",
+      "reminder": "Reminder",
+      "createdAt": "Created At",
+      "priority": "Priority",
+      "status": "Status",
+      "notFound": "User not found"
+    }
+  },
+  "Users": {
+    "generic": {
+      "empty": "No users found."
+    },
+    "columns": {
+      "id": "ID",
+      "username": "Name",
+      "password": "Password",
+      "email": "Email",
+      "role": "Role",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At"
+    },
+    "actions": {
+      "add": "Add User",
+      "edit": "Edit User",
+      "delete": "Delete User",
+      "view": "View User"
+    },
+    "create": {
+      "title": "Create User",
+      "password": "Password",
+      "username": "User Name",
+      "email": "Email Address",
+      "jobAssigned": "Job Assigned",
+      "role": {
+        "label": "Role",
+        "options": {
+          "admin": "Admin",
+          "user": "User",
+          "guest": "Guest"
+        }
+      },
+      "isActive": "Is Active",
+      "submit": "Create User"
+    },
+    "details": {
+      "title": "User Details",
+      "username": "User Name",
+      "email": "Email Address",
+      "jobAssigned": "Job Assigned",
+      "role": {
+        "label": "Role",
+        "options": {
+          "admin": "Admin",
+          "user": "User",
+          "guest": "Guest"
+        }
+      },
+      "generalInfo": "General Info",
+      "status": "Status",
+      "completed": "Completed"
+    }
+  },
+  "Common": {
+    "filters": {
+      "deleteFilter": "Clear Filters"
+    },
+    "Loading": "Loading...",
+    "buttons": {
+      "submit": "Submit",
+      "Delete": "Cancel",
+      "confirm": "Confirm",
+      "close": "Close",
+      "back": "Back"
+    },
+    "messages": {
+      "deleteConfirmation": "Are you sure you want to delete this item?",
+      "successCreate": "Item created successfully.",
+      "successUpdate": "Item updated successfully.",
+      "successDelete": "Item deleted successfully.",
+      "errorOccurred": "An error occurred. Please try again."
+    },
+    "labels": {
+      "search": "Search...",
+      "loading": "Loading...",
+      "noData": "No data available."
+    }
+  }
+}
