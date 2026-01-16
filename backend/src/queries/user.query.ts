@@ -10,7 +10,7 @@ export async function createUser(user: UserModel) {
       name: user.name,
       email: user.email,
       password: hashed,
-    }
+    },
   })
 }
 
@@ -27,6 +27,6 @@ export async function getUserById(id: string): Promise<UserModel> {
     where: { id },
     include: {
       posts: true,
-    }
+    },
   })
 }

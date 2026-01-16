@@ -6,7 +6,9 @@ export async function createUserHandler(req: Request, res: Response) {
     const user = await createUser(req.body)
     res.status(201).json(user)
   } catch (error) {
-    res.status(500).json({ error: error instanceof Error ? error.message : error })
+    res
+      .status(500)
+      .json({ error: error instanceof Error ? error.message : error })
   }
 }
 
