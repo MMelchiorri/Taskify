@@ -30,3 +30,9 @@ export async function getUserById(id: string): Promise<UserModel> {
     },
   })
 }
+
+export async function deleteUserById(id: string): Promise<UserModel> {
+  return prisma.user.delete({
+    where: { id },
+  })
+}
