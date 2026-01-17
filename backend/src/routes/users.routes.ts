@@ -13,9 +13,7 @@ export type HttpMethod = 'get' | 'post' | 'put' | 'delete'
 export interface Route {
   path: string
   method: HttpMethod
-  body?: z.ZodSchema
-  params?: z.ZodSchema
-  query?: z.ZodSchema
+  schema?: z.ZodSchema
   handler: (req: Request, res: Response, next: NextFunction) => Promise<void>
 }
 
@@ -23,7 +21,7 @@ const userRoutes: Route[] = [
   {
     path: '/users',
     method: 'post',
-    body: userSchema,
+    schema: userSchema,
     handler: createUserHandler,
   },
   {
