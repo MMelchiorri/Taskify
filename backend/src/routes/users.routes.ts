@@ -1,44 +1,18 @@
+import { Router } from 'express'
 import {
   createUserHandler,
   getUserByIdHandler,
   getUsersHandler,
   deleteUserByIdHandler,
 } from '../controllers/users.controllers'
-import type { NextFunction, Request, Response } from 'express'
 import { userSchema } from '../schemas/user.schema'
-import z from 'zod'
+import { validate } from '../middlewares/validate'
 
-export type HttpMethod = 'get' | 'post' | 'put' | 'delete'
+const router = Router()
 
-export interface Route {
-  path: string
-  method: HttpMethod
-  schema?: z.ZodSchema
-  handler: (req: Request, res: Response, next: NextFunction) => Promise<void>
-}
+router.post('/users', validate(userSchema), createUserHandler)
+router.get('/users', getUsersHandler)
+router.get('/users/:id', getUserByIdHandler)
+router.delete('/users/:id', deleteUserByIdHandler)
 
-const userRoutes: Route[] = [
-  {
-    path: '/users',
-    method: 'post',
-    schema: userSchema,
-    handler: createUserHandler,
-  },
-  {
-    path: '/users',
-    method: 'get',
-    handler: getUsersHandler,
-  },
-  {
-    path: '/users/:id',
-    method: 'get',
-    handler: getUserByIdHandler,
-  },
-  {
-    path: '/users/:id',
-    method: 'delete',
-    handler: deleteUserByIdHandler,
-  },
-]
-
-export default userRoutes
+export default router

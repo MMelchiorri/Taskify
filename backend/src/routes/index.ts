@@ -1,5 +1,10 @@
 import usersRoutes from './users.routes'
+import authRoutes from './auth.routes'
+import { Router } from 'express'
 
-const routes = [...usersRoutes]
+const router = Router()
 
-export default routes
+router.use(usersRoutes)
+router.use(authRoutes)
+
+export default router
