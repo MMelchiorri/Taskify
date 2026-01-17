@@ -1,13 +1,9 @@
 import { Router } from 'express'
-import {
-  createUserHandler,
-  getUserByIdHandler,
-  getUsersHandler,
-  deleteUserByIdHandler,
-} from '../controllers/users.controllers'
+
+import { authLogin } from '../controllers/auth.controllers'
 
 const router = Router()
 
-router.post('/auth/login', createUserHandler)
+router.post('/auth/login', authLogin)
 
 export default router

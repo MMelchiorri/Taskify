@@ -36,3 +36,9 @@ export async function deleteUserById(id: string): Promise<UserModel> {
     where: { id },
   })
 }
+
+export async function getUserByEmail(email: string): Promise<UserModel | null> {
+  return prisma.user.findUnique({
+    where: { email },
+  })
+}
