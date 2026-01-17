@@ -22,6 +22,10 @@ export const authorizedMiddleware = (
       token,
       process.env.JWT_SECRET || 'secretkey',
     ) as jwt.JwtPayload
-    console.log(decoded)
+    req.user = { id: decoded.userId }
+
     next()
+  } catch (error) {
+    return res.status(401).json({ error: 'Invalid token' })
   }
+}
