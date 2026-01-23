@@ -5,7 +5,7 @@ export async function getRefreshToken(
   id: string,
 ): Promise<RefreshTokenModel | null> {
   return prisma.refreshToken.findUnique({
-    where: { id },
+    where: { id: id },
   })
 }
 
@@ -22,5 +22,13 @@ export async function createRefreshToken(
       hashedToken,
       expiresAt,
     },
+  })
+}
+
+export async function deleteRefreshToken(
+  id: string,
+): Promise<RefreshTokenModel> {
+  return prisma.refreshToken.delete({
+    where: { id },
   })
 }

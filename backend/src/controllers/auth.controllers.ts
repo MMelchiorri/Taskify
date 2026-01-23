@@ -4,16 +4,20 @@ import { getUserByEmail } from '../queries/user.query'
 import bcrypt from 'bcrypt'
 import { authSchema } from '../schemas/auth.schema'
 import { refreshTokenService } from '../services/refreshToken.service'
-import { createRefreshToken } from '../queries/token.query'
+import {
+  createRefreshToken,
+  deleteRefreshToken,
+  getRefreshToken,
+} from '../queries/token.query'
 
 export async function authLogin(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  const { email, password } = authSchema.parse(req.body)
-
   try {
+    const { email, password } = authSchema.parse(req.body)
+
     const user = await getUserByEmail(email)
     const isValidPassword = user
       ? await bcrypt.compare(password, user.password || '')
@@ -22,11 +26,13 @@ export async function authLogin(
     if (!isValidPassword || !user) {
       return res.status(401).json({ error: 'Invalid email or password' })
     }
-    const token = jwt.sign(
+
+    const accessToken = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET!,
       { expiresIn: '15m' },
     )
+
     const refreshToken = refreshTokenService()
     const hashedRefreshToken = await bcrypt.hash(refreshToken.token, 10)
 
@@ -37,8 +43,37 @@ export async function authLogin(
       new Date(Date.now() + refreshToken.expiresIn * 1000),
     )
 
-    res.json({ token })
+    res
+      .cookie('refreshToken', refreshToken.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: refreshToken.expiresIn * 1000,
+      })
+      .json({ accessToken })
   } catch (error) {
     next(error)
+  }
+}
+
+export async function authLogout(req: Request, res: Response) {
+  try {
+    const refreshToken = req.cookies?.refreshToken
+    if (!refreshToken) return res.sendStatus(204)
+    const payload = jwt.verify(
+      refreshToken,
+      process.env.JWT_SECRET_REFRESH_TOKEN!,
+    ) as jwt.JwtPayload
+    if (!payload.jti) {
+      return res.sendStatus(204)
+    }
+    const storedToken = await getRefreshToken(payload.jti)
+    if (!storedToken) return res.sendStatus(204)
+
+    await deleteRefreshToken(storedToken.id)
+    res.clearCookie('refreshToken')
+    res.status(200).json({ message: 'Logged out successfully' })
+  } catch (error) {
+    res.sendStatus(204)
   }
 }
