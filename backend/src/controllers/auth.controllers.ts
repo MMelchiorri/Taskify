@@ -128,3 +128,72 @@ export async function authRefreshToken(
     next(error)
   }
 }
+
+export async function authRotateToken(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const refreshToken = req.cookies?.refreshToken
+    if (!refreshToken) {
+      return res.status(401).json({ error: 'No refresh token provided' })
+    }
+
+    const payload = jwt.verify(
+      refreshToken,
+      process.env.JWT_SECRET_REFRESH_TOKEN!,
+    ) as jwt.JwtPayload
+
+    if (payload) {
+      if (!payload.jti) {
+        return res.status(401).json({ error: 'Invalid refresh token' })
+      }
+      const restoredToken = await getRefreshToken(payload.jti)
+      if (!restoredToken) {
+        return res.status(401).json({ error: 'Refresh token not found' })
+      }
+      const isValidToken = await bcrypt.compare(
+        refreshToken,
+        restoredToken.hashedToken,
+      )
+      if (!isValidToken) {
+        return res.status(401).json({ error: 'Invalid refresh token' })
+      }
+
+      await deleteRefreshToken(restoredToken.id)
+
+      const user = await getUserById(restoredToken.userId)
+      if (!user) {
+        return res.status(401).json({ error: 'User not found' })
+      }
+
+      const newAccessToken = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET!,
+        { expiresIn: '15m' },
+      )
+
+      const newRefreshToken = refreshTokenService()
+      const hashedNewRefreshToken = await bcrypt.hash(newRefreshToken.token, 10)
+
+      await createRefreshToken(
+        newRefreshToken.jti,
+        user.id,
+        hashedNewRefreshToken,
+        new Date(Date.now() + newRefreshToken.expiresIn * 1000),
+      )
+
+      res
+        .cookie('refreshToken', newRefreshToken.token, {
+          httpOnly: true,
+          secure: false,
+          sameSite: 'strict',
+          maxAge: newRefreshToken.expiresIn * 1000,
+        })
+        .json({ accessToken: newAccessToken })
+    }
+  } catch (error) {
+    next(error)
+  }
+}
