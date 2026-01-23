@@ -8,5 +8,6 @@ const router = Router()
 
 router.post('/auth/login', validateMiddleware(authSchema), authLogin)
 router.delete('/auth/logout', authLogout)
+router.post('/auth/refresh', authLogin)
 
 export default router

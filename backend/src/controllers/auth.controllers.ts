@@ -46,7 +46,7 @@ export async function authLogin(
     res
       .cookie('refreshToken', refreshToken.token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: false,
         sameSite: 'strict',
         maxAge: refreshToken.expiresIn * 1000,
       })
@@ -59,6 +59,7 @@ export async function authLogin(
 export async function authLogout(req: Request, res: Response) {
   try {
     const refreshToken = req.cookies?.refreshToken
+    console.log('Refresh Token from Cookie:', refreshToken)
     if (!refreshToken) return res.sendStatus(204)
     const payload = jwt.verify(
       refreshToken,
