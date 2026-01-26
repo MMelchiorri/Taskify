@@ -8,7 +8,7 @@ import {
   createRefreshToken,
   deleteRefreshToken,
   getRefreshToken,
-} from '../queries/token.query'
+} from '../queries'
 
 export async function authLogin(
   req: Request,
