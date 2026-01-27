@@ -17,13 +17,18 @@ export async function authLogin(
 ) {
   try {
     const { email, password } = authSchema.parse(req.body)
+    console.log(email, password)
 
     const user = await getUserByEmail(email)
     const isValidPassword = user
       ? await bcrypt.compare(password, user.password || '')
       : false
 
-    if (!isValidPassword || !user) {
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
+    }
+
+    if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid email or password' })
     }
 

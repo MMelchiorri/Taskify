@@ -33,6 +33,8 @@ describe('Login Endpoints', () => {
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('accessToken')
+    expect(response.headers['set-cookie']).toBeDefined()
+    expect(response.headers['set-cookie']?.[0]).toMatch(/refreshToken=/)
   })
 
   test('POST /auth/login - invalid credentials', async () => {
@@ -42,10 +44,21 @@ describe('Login Endpoints', () => {
       password: hashedPassword, // bcrypt hash for 'password123'
     })
     const response = await request(app).post('/auth/login').send({
-      email: 'm.melchiorri@gmail.com',
+      email: 'mm.melchiorri@gmail.com',
       password: 'wrongpassword',
     })
     expect(response.status).toBe(401)
     expect(response.body).toHaveProperty('error', 'Invalid email or password')
+  })
+
+  test('POST /auth/login - user not found', async () => {
+    vi.mocked(queries.getUserByEmail, { partial: true }).mockResolvedValue(null)
+    const response = await request(app).post('/auth/login').send({
+      email: 'user_not_found@test.it',
+      password: 'anypassword',
+    })
+    console.log(response.body)
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('error', 'User not found')
   })
 })
