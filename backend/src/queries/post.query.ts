@@ -1,8 +1,8 @@
 import { prisma } from '../lib/prisma'
-import type { PostModel } from '../../generated/prisma/models/Post'
+import type { TodoModel } from '../../generated/prisma/models/Todo'
 
-export async function getPostUser(): Promise<PostModel[]> {
-  return prisma.post.findMany({
-    include: { author: true },
+export async function getPostUser(): Promise<TodoModel[]> {
+  return prisma.todo.findMany({
+    include: { assigned: true },
   })
 }

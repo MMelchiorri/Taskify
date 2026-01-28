@@ -18,7 +18,7 @@ model User {
   email         String         @unique
   name          String?
   password      String?
-  posts         Post[]
+  todos         Todo[]
   accounts      Account[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -38,12 +38,14 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Post {
+model Todo {
   id        String  @id @default(uuid())
   title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
+  dueDate   String?
+  completed Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  assigned    User    @relation(fields: [authorId], references: [id])
   authorId  String
 }
 
