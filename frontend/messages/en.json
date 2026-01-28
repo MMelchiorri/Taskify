@@ -104,7 +104,7 @@
     },
     "columns": {
       "id": "ID",
-      "name": "Name",
+      "username": "Name",
       "password": "Password",
       "email": "Email",
       "role": "Role",

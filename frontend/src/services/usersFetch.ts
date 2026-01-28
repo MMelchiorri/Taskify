@@ -28,7 +28,7 @@ export const deleteUser = async (id: string): Promise<void> => {
   }
 }
 
-export async function postUser(user: User): Promise<User | null> {
+export async function postUser(user: CreateUserPayload): Promise<User | null> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_TODO_API_BASE_URL}/users`,
