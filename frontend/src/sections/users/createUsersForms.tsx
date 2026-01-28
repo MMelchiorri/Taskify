@@ -32,11 +32,19 @@ export const CreateUsersForm: React.FC = () => {
   const t = useTranslations('Users')
   const router = useRouter()
   const [todos, setTodos] = useState<Todo[]>([])
+  console.log(todos)
 
   useEffect(() => {
     const loadTodos = async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_TODO_API_BASE_URL}/todos`
+        `${process.env.NEXT_PUBLIC_TODO_API_BASE_URL}/todos`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       const data = await res.json()
       setTodos(data)
