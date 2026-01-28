@@ -183,6 +183,26 @@
     "password": "Password",
     "submit": "Login",
     "forgotPassword": "Forgot Password?",
-    "noAccount": "Don't have an account? Sign Up"
+    "noAccount": "Don't have an account? Sign Up",
+    "invalidCredentials": "Invalid username/email or password.",
+    "login-success": "Login successful. Redirecting...",
+    "login-failure": "Login failed. Please check your credentials and try again."
+  },
+  "ErrorMessage": {
+    "username-email-required": "Username or Email is required.",
+    "username-email-invalid": "Please enter a valid Username or Email.",
+    "password-required": "Password is required.",
+    "password-min": "Password must be at least 6 characters long.",
+    "invalid-credentials": "Invalid username/email or password.",
+    "404": {
+      "title": "404 - Page Not Found",
+      "message": "The page you are looking for does not exist.",
+      "backHome": "Back to Home"
+    },
+    "500": {
+      "title": "500 - Internal Server Error",
+      "message": "Something went wrong on our end. Please try again later.",
+      "backHome": "Back to Home"
+    }
   }
 }
