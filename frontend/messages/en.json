@@ -104,7 +104,7 @@
     },
     "columns": {
       "id": "ID",
-      "username": "Name",
+      "name": "Name",
       "password": "Password",
       "email": "Email",
       "role": "Role",
@@ -176,5 +176,13 @@
       "loading": "Loading...",
       "noData": "No data available."
     }
+  },
+  "LoginForm": {
+    "title": "Login to Your Account",
+    "username-email": "Input your Username or Email",
+    "password": "Password",
+    "submit": "Login",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account? Sign Up"
   }
 }
