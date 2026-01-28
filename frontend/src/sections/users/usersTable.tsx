@@ -37,7 +37,7 @@ const excludeKeysSet = new Set([
   'password',
   'isActive',
   'updatedAt',
-  'jobAssigned',
+  'todos',
 ])
 
 const keysToDisplay = (user: User): (keyof User)[] => {
@@ -60,7 +60,7 @@ export default function UsersTable(props: UsersTableProps) {
 
   const handleDelete = useCallback(async (id: string) => {
     await deleteUser(`${id}`)
-    setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id))
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id))
   }, [])
 
   const handleNavigate = useCallback(async (id: string) => {
@@ -72,6 +72,7 @@ export default function UsersTable(props: UsersTableProps) {
   }
 
   const keys = keysToDisplay(users[0])
+  console.log(users)
 
   return (
     <>
@@ -99,8 +100,8 @@ export default function UsersTable(props: UsersTableProps) {
           <TableBody>
             {users.map((user) => (
               <UserRow
-                id={user._id}
-                key={user._id}
+                id={user.id}
+                key={user.id}
                 user={user}
                 handleDelete={handleDelete}
                 keys={keys}
@@ -128,8 +129,8 @@ export default function UsersTable(props: UsersTableProps) {
             ))}
 
             <Box display="flex" gap={1} mt={1}>
-              <DeleteButton id={user._id} onDelete={handleDelete} />
-              <DetailButton id={user._id} handleNavigate={handleNavigate} />
+              <DeleteButton id={user.id} onDelete={handleDelete} />
+              <DetailButton id={user.id} handleNavigate={handleNavigate} />
             </Box>
           </Paper>
         ))}
