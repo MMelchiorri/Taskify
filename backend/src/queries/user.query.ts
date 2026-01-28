@@ -17,7 +17,7 @@ export async function createUser(user: UserModel) {
 export async function getAllUsers(): Promise<UserModel[]> {
   return prisma.user.findMany({
     include: {
-      posts: true,
+      todos: true,
     },
   })
 }
@@ -26,7 +26,7 @@ export async function getUserById(id: string): Promise<UserModel> {
   return prisma.user.findUniqueOrThrow({
     where: { id },
     include: {
-      posts: true,
+      todos: true,
     },
   })
 }

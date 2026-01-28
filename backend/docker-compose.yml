@@ -1,12 +1,13 @@
 services:
   app:
     container_name: todo-app
-    image: node:22
     build: .
     ports:
       - "3001:3001"
     volumes:
       - ./:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/generated
     working_dir: /usr/src/app
     command: ["sh", "-c", "npm install && npx prisma generate && npm run dev"]
     environment:

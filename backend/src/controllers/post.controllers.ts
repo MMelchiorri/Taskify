@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express'
 
-import { getPostUser } from '../queries/post.query'
+import { getTodosUser } from '../queries/todos.query'
 
 export async function getUserTodos(
   req: Request,
@@ -8,7 +8,7 @@ export async function getUserTodos(
   next: NextFunction,
 ) {
   try {
-    const posts = await getPostUser()
+    const posts = await getTodosUser()
     res.json(posts)
   } catch (error) {
     next(error)
